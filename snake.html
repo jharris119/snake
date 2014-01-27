@@ -16,9 +16,12 @@
     <script>
     $(document).ready( function() {
     	var snake = new Snake($('#paper'));
-    	$('#start').click(snake.start);
+    	
+    	$('#start').attr('disabled', true).click(snake.start);
     	$('#gameover').click(snake.endgame);
-    });
+    }).on('snakeloaded') {
+    	$('#start').attr('disabled', false);
+    };
     </script>
 </body>
 </html>
