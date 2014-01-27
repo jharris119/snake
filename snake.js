@@ -90,8 +90,6 @@ function Snake(element, rows, cols, options) {
 
     var paper = Raphael;
 
-    var turnInterval = turnInterval || 1000;
-
     var COLORS = {
         SNAKE: 'rgb(0,200,0)',
         FOOD:  'rgb(0,0,200)',
