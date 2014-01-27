@@ -25,33 +25,33 @@ function Snake(element, rows, cols, turnInterval) {
          *
          * @param {Square|Coords} the square to add, not falsy
          * @return {Square} a Square -- food if there was one at this location, otherwise
-         *  the Square we just added
+         *	the Square we just added
          */
         extend: function(square) {
             if (!(square instanceof Square)) {
                 square = new Square(square.row, square.col, 'SNAKE');
             }
 
-            // if the Square is already in the snake, then we have a collision.
-            // otherwise add the Square to the front of the snake
+			// if the Square is already in the snake, then we have a collision.
+			// otherwise add the Square to the front of the snake
             if (this.asObj[square.hash]) {
                 return 0;
             }
-            this.asList.unshift(square);
-            this.asObj[square.hash] = square;
+			this.asList.unshift(square);
+			this.asObj[square.hash] = square;
 
-            return food[square.hash] || square;
+			return food[square.hash] || square;
         },
 
         /**
          * Move the snake one square in the given direction.
          *
          * @param {Function} dirFn One of right, left, up, or down, or undefined to
-         *  move in the snake's current direction.
+         *	move in the snake's current direction.
          * @return {boolean} true
          */
         move: function(dirFn) {
-            var dirFn = dirFn || currentDirection;
+        	var dirFn = dirFn || currentDirection;
 
             // Move the snake by adding a new square to the front of the snake...
             var newhead = dirFn.call(this, snake.asList[0]), ex, tail;
@@ -59,9 +59,9 @@ function Snake(element, rows, cols, turnInterval) {
                 return endGame();
             }
 
-            // if we just ate food, delete it from that object
+			// if we just ate food, delete it from that object
             if (ex.getType() == 'FOOD') {
-                return delete food[ex.hash];
+            	return delete food[ex.hash];
             }
 
             // ...and removing the square at the tail.
@@ -73,11 +73,11 @@ function Snake(element, rows, cols, turnInterval) {
         },
 
         length: function() {
-            return this.asList.length;
+        	return this.asList.length;
         }
     };
 
-    /** Map food coordinates to food Squares */
+	/** Map food coordinates to food Squares */
     var food = {};
 
     var paper = Raphael;
@@ -182,15 +182,15 @@ function Snake(element, rows, cols, turnInterval) {
         this.hash = hash(row, col);
     };
 
-    /**
-     * Turn a (row, col) pair into a string for indexing into an object literal.
-     *
-     * @param {integer} row The row
-     * @param {integer} col The column
-     * @return {string} the string
-     */
+	/**
+	 * Turn a (row, col) pair into a string for indexing into an object literal.
+	 *
+	 * @param {integer} row The row
+	 * @param {integer} col The column
+	 * @return {string} the string
+	 */
     function hash(row, col) {
-        return row + "," + col;
+    	return row + "," + col;
     }
 
     /* ****************************************************
@@ -203,61 +203,61 @@ function Snake(element, rows, cols, turnInterval) {
      * Add food to the board.
      *
      * @param {Coords} coords The coordinates to add food to, or undefined to
-     *  put food on a random square
+     * 	put food on a random square
      * @param {integer} lifetime The time until this food is removed from the
-     *  board
+     *	board
      * @param {integer} maxFood Maximum number of pieces of food on the board
-     *  at a time
+     *	at a time
      * @return the Square representing the food
      */
     function addFood(coords, lifetime, maxFood) {
-        var row = (coords && coords.row) || _.random(ROWS - 1),
-            col = (coords && coords.col) || _.random(COLS - 1);
-        var _hash = hash(row, col);
-        var square, maxFood = maxFood || 5;
-        var lifetime = lifetime || _.random(5000, 10000), defer;
+		var row = (coords && coords.row) || _.random(ROWS - 1),
+			col = (coords && coords.col) || _.random(COLS - 1);
+		var _hash = hash(row, col);
+		var square, maxFood = maxFood || 5;
+		var lifetime = lifetime || _.random(5000, 10000), defer;
 
-        // if this square is already occupied, then return
-        if (snake.asObj[_hash] || food[_hash]) {
-            return;
-        }
-        // if there are already maxFood pieces of food on the board, just return
-        if (_.size(food) >= maxFood) {
-            return;
-        }
+    	// if this square is already occupied, then return
+    	if (snake.asObj[_hash] || food[_hash]) {
+    		return;
+    	}
+    	// if there are already maxFood pieces of food on the board, just return
+    	if (_.size(food) >= maxFood) {
+    		return;
+    	}
 
-        square = new Square(row, col, 'FOOD');
+		square = new Square(row, col, 'FOOD');
 
-        function removeFood() {
-            /**
-             * Blink the square.
-             *
-             * @param {Array<Number>} opacities Animate so as to hit all of the opacities
-             *  in this array
-             * @param {Function} doneFn The function to call when the blinking is done.
-             */
-            function blink(opacities, doneFn) {
-                square.getSvg().animate({
-                    opacity: opacities.shift()
-                }, 500, Raphael.easing_formulas.linear, function() {
-                    if (opacities.length) {
-                        blink(opacities, doneFn);
-                    }
-                    else {
-                        doneFn();
-                    }
-                });
-            }
+		function removeFood() {
+			/**
+			 * Blink the square.
+			 *
+			 * @param {Array<Number>} opacities Animate so as to hit all of the opacities
+			 *	in this array
+			 * @param {Function} doneFn The function to call when the blinking is done.
+			 */
+			function blink(opacities, doneFn) {
+				square.getSvg().animate({
+					opacity: opacities.shift()
+				}, 500, Raphael.easing_formulas.linear, function() {
+					if (opacities.length) {
+						blink(opacities, doneFn);
+					}
+					else {
+						doneFn();
+					}
+				});
+			}
 
-            blink([0.1, 1, 0.1, 1, 0], function() {
-                square.getSvg().remove();
-                delete food[_hash];
-            });
-        }
+			blink([0.1, 1, 0.1, 1, 0], function() {
+				square.getSvg().remove();
+				delete food[_hash];
+			});
+		}
 
-        setTimeout(removeFood, lifetime);
+		setTimeout(removeFood, lifetime);
 
-        return food[_hash] = square;
+		return food[_hash] = square;
     }
 
     /* ****************************************************
@@ -336,23 +336,23 @@ function Snake(element, rows, cols, turnInterval) {
      * Run the game's next iteration then wait.
      */
     function nextTurn() {
-        snake.move();
-        if (!gameOver) {
-            moveTimerId = setTimeout(nextTurn, turnInterval - (40 * (snake.length() - 1)));
-        }
+		snake.move();
+		if (!gameOver) {
+			moveTimerId = setTimeout(nextTurn, turnInterval - (40 * (snake.length() - 1)));
+		}
     }
 
     /**
      * Pause the game.
      */
     function pause() {
-        // easiest way I can think of to pause the game
-        window.alert('Paused');
+    	// easiest way I can think of to pause the game
+    	window.alert('Paused');
     }
 
-    /**
-     * End the game.
-     */
+	/**
+	 * End the game.
+	 */
     function endGame() {
         gameOver = true;
         clearTimeout(moveTimerId);
@@ -369,7 +369,7 @@ function Snake(element, rows, cols, turnInterval) {
             down: down,
             snake: snake,
             getDirection: function() {
-                return currentDirection;
+            	return currentDirection;
             },
 
             /**
@@ -398,25 +398,25 @@ function Snake(element, rows, cols, turnInterval) {
                 return snake.extend(square);
             },
 
-            food: food,
+			food: food,
             addFoodSquare: function(coords) {
-                return addFood(coords);
+            	return addFood(coords);
             },
 
             endgame: endGame
         };
     }
 
-    // run the game
+	// run the game
     init(element);
 
-    return {
-        start: function() {
-            nextTurn();
-            _.delay(function() {
-                foodIntervalId = setInterval(addFood, turnInterval);
-            }, _.random(1000, 4000));
-        },
-        endgame: endGame
-    };
+	return {
+		start: function() {
+			nextTurn();
+			_.delay(function() {
+				foodIntervalId = setInterval(addFood, turnInterval);
+			}, _.random(1000, 4000));
+		},
+		endgame: endGame
+	};
 }
