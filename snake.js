@@ -1,20 +1,28 @@
 /**
  * The snake game that was popular on old-style Nokia phones.
  *
+ * @constructor
  * @param {jQuery | HTMLElement} element the game's canvas
  * @param {integer} height the number of rows on the game board, defaults to 16
  * @param {integer} width the number of columns on the game board, defaults to 10
- * @param {integer} turnInterval between turn iterations, defaults to 1000 ms
+ * @param {Object} options
+ * @property {number} options.turnInterval The interval in ms between clock ticks,
+ * 	defaults to 1000
+ * @property {string} options.patternFile A file pointing to a pattern for the
+ * 	snake board
  */
-function Snake(element, rows, cols, turnInterval) {
+function Snake(element, rows, cols, options) {
 
     var ROWS = rows || 15, COLS = cols || 11;
+    var options = options || {};
     var _element, $element;
 
     /** @constant @member {integer} */
     var SQUARE_SIZE;
 
     var gameOver = false;
+    
+    options.turnInterval = options.turnInterval || 1000;
 
     var snake = {
         asList: [],
@@ -338,7 +346,8 @@ function Snake(element, rows, cols, turnInterval) {
     function nextTurn() {
 		snake.move();
 		if (!gameOver) {
-			moveTimerId = setTimeout(nextTurn, turnInterval - (40 * (snake.length() - 1)));
+			moveTimerId = setTimeout(nextTurn, 
+					options.turnInterval - (40 * (snake.length() - 1)));
 		}
     }
 
@@ -414,7 +423,7 @@ function Snake(element, rows, cols, turnInterval) {
 		start: function() {
 			nextTurn();
 			_.delay(function() {
-				foodIntervalId = setInterval(addFood, turnInterval);
+				foodIntervalId = setInterval(addFood, options.turnInterval);
 			}, _.random(1000, 4000));
 		},
 		endgame: endGame
