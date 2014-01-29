@@ -157,6 +157,9 @@ function Snake(element, rows, cols, options) {
                     $(document).trigger('snakeloaded');
                 });
         }
+    else {
+        $(document).trigger('snakeloaded');
+    }
     };
 
     /**
