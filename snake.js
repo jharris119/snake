@@ -21,7 +21,7 @@ function Snake(element, rows, cols, options) {
     /** @constant @member {integer} */
     var SQUARE_SIZE;
 
-    var gameOver = false;
+    var isLoaded = false, gameOver = false;
 
     options.turnInterval = options.turnInterval || 1000;
 
@@ -154,12 +154,14 @@ function Snake(element, rows, cols, options) {
                     // fail silently, just don't use a pattern
                 })
                 .always( function(data) {
+                    isLoaded = true;
                     $(document).trigger('snakeloaded');
                 });
         }
-    else {
-        $(document).trigger('snakeloaded');
-    }
+        else {
+            isLoaded = true;
+            $(document).trigger('snakeloaded');
+        }
     };
 
     /**
@@ -457,6 +459,7 @@ function Snake(element, rows, cols, options) {
                 foodIntervalId = setInterval(addFood, options.turnInterval);
             }, _.random(1000, 4000));
         },
-        endgame: endGame
+        endgame: endGame,
+        isLoaded: isLoaded
     };
 }
