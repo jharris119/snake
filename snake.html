@@ -19,9 +19,9 @@
     	
     	$('#start').attr('disabled', true).click(snake.start);
     	$('#gameover').click(snake.endgame);
-    }).on('snakeloaded') {
+    }).on('snakeloaded', function() {
     	$('#start').attr('disabled', false);
-    };
+    });
     </script>
 </body>
 </html>

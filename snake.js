@@ -1,3 +1,4 @@
+
 /**
  * The snake game that was popular on old-style Nokia phones.
  *
