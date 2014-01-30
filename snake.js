@@ -132,37 +132,44 @@ function Snake(element, rows, cols, options) {
 
         snake.extend(new Square(Math.floor(ROWS / 2), Math.floor(COLS / 2), 'SNAKE'));
 
-        // Load a pattern if we have a filename
-        if (options.patternFile) {
-            $.getJSON(options.patternFile)
-                .done( function(data) {
-                    $.each(data.blocks, function(index, val) {
-                        if (val === undefined) { return true; }     // continue
-                        if (!(_.isInteger(val.row) && _.isInteger(val.col))) { return true; }
-                        if (val.row < 0 || val.row >= ROWS || val.col < 0 || val.col >= COLS) { return true; }
-
-                        var hashString = hash(val.row, val.col);
-                        if (snake.asObj[hashString]) {
-                            console.warn("Trying to block the initial snake square. Not going to happen.");
-                            return true;
-                        }
-
-                        blocks[hashString] = new Square(val, 'BLOCK');
-                    });
-                })
-                .fail( function(data) {
-                    // fail silently, just don't use a pattern
-                })
-                .always( function(data) {
-                    isLoaded = true;
-                    $(document).trigger('snakeloaded');
-                });
-        }
-        else {
-            isLoaded = true;
-            $(document).trigger('snakeloaded');
-        }
+        loadFile();
     };
+
+    /**
+     * Load the pattern and trigger an event when the pattern is loaded.
+     *
+     * @fires Snake.snakeloaded
+     */
+    function loadFile() {
+        if (!options.patternFile) {
+            $(document).trigger('snakeloaded');
+            isLoaded = true;
+            return;
+        }
+
+        $.getJSON(options.patternFile)
+            .done( function(data) {
+                $.each(data.blocks, function(index, val) {
+                    if (val === undefined) { return true; }     // continue
+                    if (!(_.isInteger(val.row) && _.isInteger(val.col))) { return true; }
+                    if (val.row < 0 || val.row >= ROWS || val.col < 0 || val.col >= COLS) { return true; }
+
+                    var hashString = hash(val.row, val.col);
+                    if (snake.asObj[hashString]) {
+                        console.warn("Trying to block the initial snake square. Not going to happen.");
+                        return true;
+                    }
+                    blocks[hashString] = new Square(val, 'BLOCK');
+                });
+            })
+            .fail( function(data) {
+                // fail silently, just don't use a pattern
+            })
+            .always( function(data) {
+                isLoaded = true;
+                $(document).trigger('snakeloaded');
+            });
+    }
 
     /**
      * A coordinates object
@@ -460,6 +467,7 @@ function Snake(element, rows, cols, options) {
             }, _.random(1000, 4000));
         },
         endgame: endGame,
+        loadfile: loadFile,
         isLoaded: isLoaded
     };
 }
