@@ -190,14 +190,13 @@ function Snake(element, rows, cols, options) {
     function Square(_row, _col, _type) {
         var row, col, type, svg;
 
-        row = _.initial(arguments)[0];  // _.initial returns an array
-        if (row.length == 1) {
-            row = row.row;
-            col = row.col;
+        if (_.isObject(arguments[0])) {
+        	row = arguments[0].row;
+        	col = arguments[0].col;
         }
         else {
-            row = _row;
-            col = _col;
+        	row = _row;
+        	col = _col;
         }
 
         type = _.last(arguments);
