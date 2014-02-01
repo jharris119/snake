@@ -144,12 +144,16 @@ function Snake(element, rows, cols, options) {
     function loadFile(patternFile) {
     	options.patternFile = patternFile;
     	
-        if (options.patternFile === undefined) {
+        if (!options.patternFile) {
+        	if (options.patternFile !== undefined) {
+        		clearBlocks();
+        	}
+        	
             $(document).trigger('snakeloaded');
             isLoaded = true;
             return;
         }
-
+        
         $.getJSON(options.patternFile)
             .done( function(data) {
             	clearBlocks();
@@ -167,9 +171,7 @@ function Snake(element, rows, cols, options) {
                 });
             })
             .fail( function(data) {
-                // clear whatever's there, then fail silently -- also good for
-            	// just resetting the board
-            	clearBlocks();
+                // fail silently
             })
             .always( function(data) {
                 isLoaded = true;
