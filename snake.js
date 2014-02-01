@@ -152,6 +152,7 @@ function Snake(element, rows, cols, options) {
 
         $.getJSON(options.patternFile)
             .done( function(data) {
+            	clearBlocks();
                 $.each(data.blocks, function(index, val) {
                     if (val === undefined) { return true; }     // continue
                     if (!(_.isInteger(val.row) && _.isInteger(val.col))) { return true; }
@@ -172,6 +173,13 @@ function Snake(element, rows, cols, options) {
                 isLoaded = true;
                 $(document).trigger('snakeloaded');
             });
+    }
+    
+    function clearBlocks() {
+    	_(blocks).forEach(function(key, val) {
+    		val.getSvg().remove();
+    	});
+    	blocks = {};
     }
 
     /**
