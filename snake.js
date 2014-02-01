@@ -142,7 +142,7 @@ function Snake(element, rows, cols, options) {
      * @fires Snake.snakeloaded
      */
     function loadFile(patternFile) {
-    	options.patternFile = patternFile || options.patternFile;
+    	options.patternFile = patternFile;
     	
         if (options.patternFile === undefined) {
             $(document).trigger('snakeloaded');
