@@ -138,9 +138,12 @@ function Snake(element, rows, cols, options) {
     /**
      * Load the pattern and trigger an event when the pattern is loaded.
      *
+     * @param {string} patternFile The JSON file with the pattern we're using.
      * @fires Snake.snakeloaded
      */
-    function loadFile() {
+    function loadFile(patternFile) {
+    	options.patternFile = patternFile || options.patternFile;
+    	
         if (!options.patternFile) {
             $(document).trigger('snakeloaded');
             isLoaded = true;
