@@ -26,7 +26,7 @@
     	$('#start').attr('disabled', !snake.isLoaded).click(snake.start);
     	$('#gameover').click(snake.endgame);
     	
-    	$('select#choose_board').onchange(function(evt) {
+    	$('select#choose_board').change(function(evt) {
     		snake.loadfile($(evt.target).val());
     	});
     }).on('snakeloaded', function() {
