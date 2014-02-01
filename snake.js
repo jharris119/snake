@@ -176,7 +176,7 @@ function Snake(element, rows, cols, options) {
     }
     
     function clearBlocks() {
-    	_(blocks).forEach(function(key, val) {
+    	_(blocks).each(function(value, key) {
     		val.getSvg().remove();
     	});
     	blocks = {};
