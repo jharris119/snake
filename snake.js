@@ -142,21 +142,21 @@ function Snake(element, rows, cols, options) {
      * @fires Snake.snakeloaded
      */
     function loadFile(patternFile) {
-    	options.patternFile = patternFile;
-    	
+        options.patternFile = patternFile;
+
         if (!options.patternFile) {
-        	if (options.patternFile !== undefined) {
-        		clearBlocks();
-        	}
-        	
+            if (options.patternFile !== undefined) {
+                clearBlocks();
+            }
+
             $(document).trigger('snakeloaded');
             isLoaded = true;
             return;
         }
-        
+
         $.getJSON(options.patternFile)
             .done( function(data) {
-            	clearBlocks();
+                clearBlocks();
                 $.each(data.blocks, function(index, val) {
                     if (val === undefined) { return true; }     // continue
                     if (!(_.isInteger(val.row) && _.isInteger(val.col))) { return true; }
@@ -178,12 +178,12 @@ function Snake(element, rows, cols, options) {
                 $(document).trigger('snakeloaded');
             });
     }
-    
+
     function clearBlocks() {
-    	_(blocks).each(function(value, key) {
-    		value.getSvg().remove();
-    	});
-    	blocks = {};
+        _(blocks).each(function(value, key) {
+            value.getSvg().remove();
+        });
+        blocks = {};
     }
 
     /**
@@ -203,12 +203,12 @@ function Snake(element, rows, cols, options) {
         var row, col, type, svg;
 
         if (_.isObject(arguments[0])) {
-        	row = arguments[0].row;
-        	col = arguments[0].col;
+            row = arguments[0].row;
+            col = arguments[0].col;
         }
         else {
-        	row = _row;
-        	col = _col;
+            row = _row;
+            col = _col;
         }
 
         type = _.last(arguments);
