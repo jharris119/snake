@@ -159,8 +159,10 @@ function Snake(element, rows, cols, options) {
                 clearBlocks();
                 $.each(data.blocks, function(index, val) {
                     if (val === undefined) { return true; }     // continue
-                    if (!(_.isInteger(val.row) && _.isInteger(val.col))) { return true; }
                     if (val.row < 0 || val.row >= ROWS || val.col < 0 || val.col >= COLS) { return true; }
+
+                    val.row = Math.floor(val.row);
+                    val.col = Math.floor(val.col);
 
                     var hashString = hash(val.row, val.col);
                     if (snake.asObj[hashString]) {
