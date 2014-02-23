@@ -20,16 +20,16 @@
     <script src="snake.js" type="text/javascript"></script>
     <script>
     $(document).ready( function() {
-    	var snake = new Snake($('#paper'));
+        var snake = new Snake($('#paper'));
 
-    	$('#start').attr('disabled', !snake.isLoaded).click(snake.start);
-    	$('#gameover').click(snake.endgame);
-    	
-    	$('select#choose_board').change(function(evt) {
-    		snake.loadfile($(evt.target).val());
-    	});
+        $('#start').attr('disabled', !snake.isLoaded).click(snake.start);
+        $('#gameover').click(snake.endgame);
+
+        $('select#choose_board').change(function(evt) {
+            snake.loadfile($(evt.target).val());
+        });
     }).on('snakeloaded', function() {
-    	$('#start').attr('disabled', false);
+        $('#start').attr('disabled', false);
     });
     </script>
 </body>
