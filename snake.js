@@ -21,7 +21,7 @@ function Snake(element, rows, cols, options) {
     /** @constant @member {integer} */
     var SQUARE_SIZE;
 
-    var isLoaded = false, gameOver = false;
+    var isLoaded = false, gameOver = true;
 
     options.turnInterval = options.turnInterval || 1000;
 
@@ -129,6 +129,8 @@ function Snake(element, rows, cols, options) {
         SQUARE_SIZE = $element.height() / ROWS;
 
         paper = Raphael(_element);
+        
+        gameOver = false;
 
         snake.extend(new Square(Math.floor(ROWS / 2), Math.floor(COLS / 2), 'SNAKE'));
 
