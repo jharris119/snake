@@ -129,7 +129,7 @@ function Snake(element, rows, cols, options) {
         SQUARE_SIZE = $element.height() / ROWS;
 
         paper = Raphael(_element);
-        
+
         gameOver = false;
 
         snake.extend(new Square(Math.floor(ROWS / 2), Math.floor(COLS / 2), 'SNAKE'));
@@ -486,6 +486,7 @@ function Snake(element, rows, cols, options) {
         },
         endgame: endGame,
         loadfile: loadFile,
-        isLoaded: isLoaded
+        isLoaded: isLoaded,
+        gameOver: gameOver
     };
 }
