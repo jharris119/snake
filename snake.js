@@ -130,8 +130,6 @@ function Snake(element, rows, cols, options) {
 
         paper = Raphael(_element);
 
-        gameOver = false;
-
         snake.extend(new Square(Math.floor(ROWS / 2), Math.floor(COLS / 2), 'SNAKE'));
 
         loadFile();
@@ -479,6 +477,7 @@ function Snake(element, rows, cols, options) {
 
     return {
         start: function() {
+            gameOver = false;
             nextTurn();
             _.delay(function() {
                 foodIntervalId = setInterval(addFood, options.turnInterval);
