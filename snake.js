@@ -329,15 +329,15 @@ function Snake(element, rows, cols, options) {
      *****************************************************/
     var handleKeydown = function(evt) {
         switch (evt.which) {
-            case KeyboardEvent.DOM_VK_LEFT:
+            case 37:
                 currentDirection = left; break;
-            case KeyboardEvent.DOM_VK_UP:
+            case 38:
                 currentDirection = up; break;
-            case KeyboardEvent.DOM_VK_RIGHT:
+            case 39:
                 currentDirection = right; break;
-            case KeyboardEvent.DOM_VK_DOWN:
+            case 40:
                 currentDirection = down; break;
-            case KeyboardEvent.DOM_VK_P:
+            case 80:    /* "P" */
                 pause(); break;
             default:
                 break;
