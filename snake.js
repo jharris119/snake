@@ -328,6 +328,7 @@ function Snake(element, rows, cols, options) {
      *
      *****************************************************/
     var handleKeydown = function(evt) {
+        evt.preventDefault();
         switch (evt.which) {
             case 37:
                 currentDirection = left; break;
